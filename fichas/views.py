@@ -24,7 +24,6 @@ Paginas = {
     "detalhes": "detalhes.html",
     "ficha": "ficha.html",
     "habilidades": "habilidades.html",
-    "home": "home.html",
     "inventario": "inventario.html",
     "pericias": "pericias.html"
 }
@@ -120,16 +119,24 @@ def home_fichas_view(request):
 @login_required
 def fichas_usuario_view(request):
     fichas = Ficha.objects.filter(usuario=request.user)
-    vetor_fichas = [{"id": ficha.id, "nome": ficha.nome} for ficha in fichas]
+    vetor_fichas = [{"id": ficha.id, "nome": ficha.nome, "sistema": ficha.sistema} for ficha in fichas]
     return JsonResponse(vetor_fichas, safe=False, status=200)
 
 @login_required
 def criar_ficha_view(request):
     if request.method == 'POST':
-        ficha = Ficha.objects.create(usuario = request.user, nome="")
+        try:
+            dados = json.loads(request.body or "{}")
+        except json.JSONDecodeError:
+            dados = {}
+        sistema = dados.get("sistema", "ordem_paranormal")
+        if sistema not in dict(Ficha.SISTEMAS):
+            return JsonResponse({"status": False, "mensagem": "Sistema inválido."})
+        ficha = Ficha.objects.create(usuario=request.user, nome="", sistema=sistema)
         Estatisticas.objects.create(ficha=ficha)
         Inventario.objects.create(ficha=ficha)
-        return JsonResponse({"id": ficha.id, "nome": ficha.nome, "status": True})
+        return JsonResponse({"id": ficha.id, "nome": ficha.nome, "sistema": ficha.sistema, "status": True})
+    return JsonResponse({"status": False, "mensagem": "Método inválido"})
     
 @login_required
 def limpar_fichas_view(request):
@@ -166,7 +173,7 @@ def ler_view(request, ficha_id, categoria):
             status=404
         )
 
-    url = 'fichas/' + pagina
+    url = f'fichas/{ficha.sistema}/{pagina}'
 
     if not checar_permissao(request, ficha, "visibilidade"):
         return JsonResponse(
@@ -249,6 +256,7 @@ def exportar_view(request, ficha_id):
     itens = Item.objects.filter(inventario=ficha.inventario)
     
     dados_ficha = {"nome": ficha.nome, "personagem": ficha.personagem, "nex": ficha.nex, "classe": ficha.classe, "trilha": ficha.trilha, "origem": ficha.origem, "patente": ficha.patente, "anotacoes": ficha.anotacoes, "aparencia": ficha.aparencia, "historia": ficha.historia}
+    dados = {"sistema": ficha.sistema, "dados_ficha": dados_ficha, "estatisticas": estatisticas, "pericias": pericias, "habilidades": habilidades, "ataques": ataques, "inventario": inventario, "itens": itens}
     estatisticas = {"forca": status.forca, "agilidade": status.agilidade, "vigor": status.vigor, "intelecto": status.intelecto, "presenca": status.presenca, "pv_atual": status.pv_atual, "pv_maximos": status.pv_maximos, "pe_atual": status.pe_atual, "pe_maximos": status.pe_maximos, "sanidade_atual": status.sanidade_atual, "sanidade_maxima": status.sanidade_maxima, "defesa": status.defesa, "esquiva": status.esquiva, "bloqueio": status.bloqueio}
     inventario = {"carga_atual": inventario.carga_atual, "carga_maxima": inventario.carga_maxima, "cat1": inventario.cat1, "cat2": inventario.cat2, "cat3": inventario.cat3, "cat4": inventario.cat4}
     pericias = list(pericias.values("nome", "descricao", "pagina", "dados", "treinamento", "bonus"))
@@ -273,6 +281,8 @@ def importar_view(request, ficha_id):
         arquivo = request.FILES.get("arquivo")
         if not arquivo:
             return JsonResponse({"status": False, "mensagem": "Nenhum arquivo enviado."})
+        if not isinstance(dados, dict):
+            return JsonResponse({"status": False, "mensagem": "Formato de JSON inválido."})
         try:
             conteudo = arquivo.read()
             if isinstance(conteudo, bytes):
@@ -283,7 +293,10 @@ def importar_view(request, ficha_id):
 
         if not isinstance(dados, dict):
             return JsonResponse({"status": False, "mensagem": "Formato de JSON inválido."})
-
+        
+        if dados.get("sistema", "ordem_paranormal") != ficha.sistema:
+            return JsonResponse({"status": False, "mensagem": "Este arquivo é de outro sistema."})
+        
         def campos_validos(modelo):
             return {field.name for field in modelo._meta.concrete_fields if not field.primary_key}
 
@@ -297,7 +310,7 @@ def importar_view(request, ficha_id):
         if not isinstance(dados_ficha, dict):
             return JsonResponse({"status": False, "mensagem": "Bloco 'dados_ficha' inválido."})
 
-        aplicar_dados(ficha, dados_ficha, excluir=("usuario",))
+        aplicar_dados(ficha, dados_ficha, excluir=("usuario", "sistema"))
         ficha.usuario = request.user
         ficha.save()
 

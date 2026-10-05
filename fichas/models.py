@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+
+  
 class Ficha(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="fichas")
     visibilidade = models.IntegerField(choices=[(0, 'Privada'), (1, 'Mestre'), (2, 'Sala'), (3, 'Pública')], default=0)
@@ -17,7 +19,8 @@ class Ficha(models.Model):
     aparencia = models.TextField(default="Descrição física do personagem como: gênero, idade, altura etc.")
     historia = models.TextField(default="História do personagem (de onde veio, qual seu objetivo etc.)")
     token_personagem = models.ImageField(upload_to='fichas/token_personagem/', default='token_personagem/token')
-
+    SISTEMAS = [('ordem_paranormal', 'Ordem Paranormal'), ('tormenta20', 'Tormenta 20')]
+    sistema = models.CharField(max_length=32, choices=SISTEMAS, default='ordem_paranormal')
     def __str__(self):
         return self.nome
 
