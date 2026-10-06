@@ -1,0 +1,706 @@
+/* ======================================================
+   VARIÁVEIS GLOBAIS
+====================================================== */
+
+:root {
+  --bg: #1F1F1F;
+  --card: #0c0c0c;
+  --text: #e5e7eb;
+  --accent: rgb(192, 33, 33);
+  --muted: #94a3b8;
+}
+
+
+/* ======================================================
+   RESET / BASE
+====================================================== */
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  margin: 0;
+  padding: 1rem;
+  color: var(--text);
+  background-image: url(../img/Logo_Ordo_Realitas2.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: 700px;
+}
+
+
+/* ======================================================
+   CONTAINER PRINCIPAL
+====================================================== */
+
+.sheet {
+  max-width: 380px;
+  margin: auto;
+  background: var(--card);
+  border-radius: 20px;
+  padding: 1rem;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.sheet.loaded {
+  opacity: 1;
+}
+
+/* ======================================================
+   TOPO DA FICHA
+====================================================== */
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.photo {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  object-fit: cover;
+}
+
+.image {
+  align-items: center;
+  align-content: center;
+  max-width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.info {
+  flex: 1;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.level {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+
+/* ======================================================
+   CAMPOS DE TEXTO E INPUTS
+====================================================== */
+
+input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #334155;
+  color: var(--text);
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.stat input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #334155;
+  color: var(--text);
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+}
+
+input:disabled {
+  border-bottom-color: transparent;
+}
+
+.attr input,
+.defenses input {
+  height: 28px;
+  font-weight: bold;
+  padding-left: 14px;
+}
+
+
+/* ======================================================
+   BOTÕES DE EDIÇÃO
+====================================================== */
+
+.edit-icon {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.edit-icon:hover {
+  opacity: 0.8;
+}
+
+.edit-btn {
+  margin: 0.8rem 0;
+  color: white;
+  background: var(--accent);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+
+/* ======================================================
+   ATRIBUTOS
+====================================================== */
+
+.attributes {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.attr {
+  text-align: center;
+  font-size: 0.7rem;
+}
+
+.attr input {
+  text-align: center;
+  font-size: 1.1rem;
+  padding-left: 14px;
+}
+
+
+/* ======================================================
+   SEÇÕES PADRÃO
+====================================================== */
+
+.section {
+  margin-top: 0.8rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.resource {
+  margin-top: 0.3rem;
+}
+
+.inline {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+
+/* ======================================================
+   BARRAS DE VIDA / DETERMINAÇÃO
+====================================================== */
+
+.bar-bg {
+  background: #020617;
+  height: 14px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: var(--accent);
+  width: 100%;
+}
+
+
+/* ======================================================
+   DEFESAS
+====================================================== */
+
+.defenses {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+
+/* ======================================================
+   ATAQUES
+====================================================== */
+
+.attacks {
+  margin-top: 0.5rem;
+}
+
+.attack {
+  border-bottom: 1px solid #334155;
+  padding: 0.3rem 0;
+}
+
+.attack button {
+  background: transparent;
+  color: #ef4444;
+  border: none;
+  font-size: 0.7rem;
+  display: none;
+}
+
+.attack button:hover {
+  background: transparent;
+  color: #ef4444;
+  border: none;
+  font-size: 0.7rem;
+  display: none;
+  transform: translateY(0px);
+}
+
+.editing .attack button {
+  display: inline;
+}
+
+.list {
+  text-align: center;
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+.listend {
+  text-align: center;
+  border-right-width: 1px;
+}
+
+
+/* ======================================================
+   INVENTÁRIO
+====================================================== */
+
+.inventory-header {
+  display: grid;
+  grid-template-columns: 1fr 80px 70px;
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+
+.inventory {
+  margin-top: 0.3rem;
+}
+
+.patente {
+  background-color: #1e293b;
+  color: #fff;
+  border: 1px, solid, #2b58de;
+  border-radius: 3px;
+}
+
+.item {
+  border-bottom: 1px solid #334155;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns:1fr 80px 70px;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0;
+  cursor: pointer;
+}
+
+.item-row input {
+  font-size: 0.9rem;
+}
+
+.arrow {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.item-body {
+  display: none;
+  padding: 0.4rem 0;
+}
+
+.item.open .item-body {
+  display: block;
+}
+
+.item-body textarea {
+  width: 100%;
+  min-height: 60px;
+  background: transparent;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.4rem;
+  resize: none;
+}
+
+.remove-item {
+  margin-top: 0.3rem;
+  background: transparent;
+  color: #ef4444;
+  border: none;
+  display: none;
+}
+
+.editing .remove-item {
+  display: inline;
+}
+
+h2 {
+  clear: both;
+  font-size: 16px;
+  cursor: text;
+}
+
+/* ======================================================
+   TEXTAREA GLOBAL
+====================================================== */
+
+textarea {
+  width: 100%;
+  min-height: 60px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid #0d246b;
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.4rem;
+  resize: vertical;
+}
+
+
+/* ======================================================
+   ACCORDION CUSTOM
+====================================================== */
+
+.accordion-custom .accordion-item {
+  background: var(--card);
+  border: 1px solid #2a3343;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.accordion-custom .accordion-header {
+  margin: 0;
+}
+
+.accordion-custom .accordion-button {
+  background: var(--card);
+  color: var(--text);
+  border: none;
+  font-size: 0.95rem;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.accordion-custom .accordion-button:not(.collapsed) {
+  background: #192233;
+  color: var(--accent);
+}
+
+.accordion-custom .accordion-button:hover {
+  background: #1f293d;
+}
+
+.accordion-custom .accordion-button::after {
+  filter: invert(1);
+  transition: transform 0.2s;
+}
+
+.accordion-custom .accordion-button:not(.collapsed)::after {
+  transform: rotate(180deg);
+}
+
+.accordion-custom .accordion-body {
+  background: var(--bg);
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem;
+  border-top: 1px solid #334155;
+}
+
+.accordion-custom textarea,
+.accordion-custom .editable-text {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: var(--text);
+  padding: 0.4rem;
+  resize: vertical;
+}
+
+.accordion-custom .remove-item {
+  margin-top: 0.4rem;
+  color: #fff !important;
+  background-color: #b22222 !important;
+  border-radius: 0.375rem;
+  height: 20px;
+  font-size: 10px;
+}
+
+
+/* ======================================================
+   TEXTO EDITÁVEL
+====================================================== */
+
+.editing-text {
+  border: 1px solid var(--accent);
+  padding: 0.35rem;
+  border-radius: 6px;
+  background: #0f172a;
+}
+
+
+/* ======================================================
+   BOOTSTRAP BOTÕES
+====================================================== */
+
+.btn-outline-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-border-color: #de312b;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: rgb(131, 21, 2);
+}
+
+.btn-outline-primary:hover {
+  background-color: #6e0202 !important;
+  border-color: #de312b !important;
+  color: #ffffff;
+  font-weight: bolder;
+}
+
+#retornar, #retornar:hover { 
+  --bs-btn-color: #fff;
+  --bs-btn-border-color: #de312b;
+  --bs-btn-hover-color: #fff;
+  margin-left: 8px;
+  font-weight: bolder;
+  box-shadow: 0px 0px 5px 1px rgb(131, 21, 2);
+}
+
+#retornar:hover, #edit-btn:hover {
+  background-color: transparent !important;
+  transform: translateY(-2px);
+  box-shadow: 0px 0px 5px 1px rgb(131, 21, 2) !important;
+}
+
+.ama,
+.ama:visited,
+.ama:hover,
+.ama:active,
+.ama:focus {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+#retornar:active {
+  border: none !important;
+  background-color: transparent !important;
+  box-shadow: 0px 0px 5px 1px rgb(131, 21, 2) !important;
+}
+
+
+.edit-icon, .edit-icon:hover {
+  border: none !important;
+  box-shadow: none !important;
+  transform: translateY(0px);
+}
+
+.edit-icon:hover {
+  background-color: transparent !important;
+  opacity: 0.4;
+}
+
+.btn{
+  --bs-btn-padding-y: .40rem; 
+  --bs-btn-padding-x: .5rem; 
+  --bs-btn-font-size: .75rem;
+}
+
+
+/* ======================================================
+   DADOS (ROLAGEM)
+====================================================== */
+
+.dice-result {
+  margin-top: 0.5rem;
+  padding: 0.4rem;
+  background: #020617;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.dice-control {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.dice {
+  background-color: #1e293b;
+  color: #fff;
+  border: 0px;
+}
+
+/* ======================================================
+   IMAGENS
+====================================================== */
+
+.photo-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.photo-wrapper::after {
+  content: "Alterar";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 2px 0;
+  opacity: 0;
+  border-radius: 10px;
+}
+
+.editing .photo-wrapper::after {
+  opacity: 1;
+}
+
+
+.image-wrapper {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.image-wrapper::after {
+  content: "Alterar";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 2px 0;
+  opacity: 0;
+  border-radius: 10px;
+}
+
+.editing .image-wrapper::after {
+  opacity: 1;
+}
+
+button {
+    background-color: rgb(192, 33, 33);
+    color: rgb(247, 237, 237);
+    border: none;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 200px;
+    box-shadow: 0px 0px 10px 2px rgb(131, 21, 2);
+    transition: all 0.25s;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(247, 40, 40);
+    transform: translateY(-2px);
+    box-shadow: 0px 0px 5px 5px rgb(131, 21, 2);
+}
+
+button:active {
+    background-color: rgb(241, 105, 105);
+    box-shadow: 0px 0px 5px 5px rgb(255, 38, 0);
+}
+
+button.export {
+  font-weight: bold;
+  box-shadow: 0px 0px 5px 1px rgb(35, 206, 1);
+}
+
+button.export:hover {
+    background-color: rgb(12, 161, 7);
+    transform: translateY(-2px);
+    box-shadow: 0px 0px 5px 3px rgb(3, 177, 18);
+}
+
+button.export:active {
+    background-color: rgb(15, 230, 8);
+    box-shadow: 0px 0px 10px 8px rgb(4, 219, 22);
+}
+
+button.import {
+  font-weight: bold;
+  margin-left: 5px;
+  box-shadow: 0px 0px 5px 1px #0d6efd;
+}
+
+button.import:hover {
+    background-color: #347ff0;
+    transform: translateY(-2px);
+    box-shadow: 0px 0px 5px 3px #347ff0
+}
+
+button.import:active {
+    background-color: #0063f7;
+    box-shadow: 0px 0px 10px 8px #478bf1;
+}
+
+button.dice:hover {
+    transform: translateY(0px);
+}
+
+.estilo {
+  position: flex;
+  background: var(--accent);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-weight: bold;
+  float: right;
+  margin-right: 40px;
+  transition: all 0.2s ease;
+}
+
+.estilo:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+.estilo:active {
+  opacity: 0.6;
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="icon" type="image/x-icon" href="{% static 'img/d20hub.ico' %}">
+  <title>D20HUB</title>
+
+  <!--bootstrap css-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  
+  <!--bootstrap icons-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <!--arquivo css-->
+  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.2">
+
+  <!--bootstrap javascript-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  <!--javascript ficha-->
+  <script src="{% static 'js/ficha.js' %}?v=1.10" defer></script>
+  
+  <script>
+    window.csrftoken = '{{ csrf_token }}';
+  </script>
+</head>
+
+<body data-sistema="{{ ficha.sistema }}">
+  <div class="sheet" data-id="{{ ficha.id }}">
+    <header>
+      <div style="margin-bottom: 10px; text-align: center;">
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">Ficha</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">Pericias</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">Habilidades</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">Inventário</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">Detalhes</a>
+      </div>
+      <div class="top">
+        <div class="image-wrapper">
+          <img src="{{ ficha.foto_personagem.url }}" data-save="foto_personagem" class="photo" id="charImage" alt="Foto do personagem">
+          {% if pode_editar %}
+            <input type="file" id="imageInput" accept="image/*" hidden data-save="foto_personagem" class="foto">
+          {% endif %} 
+        </div>
+        <div class="info">
+          <div class="name-row">
+            <input class="editable name" disabled value="{{ ficha.personagem }}" data-save="personagem">
+            {% if pode_editar %}
+                <button class="edit-icon" id="editBtn" onclick="editar()">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+            {% endif %} 
+          </div>
+          <div class="level">
+            Raça:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha"> &nbsp
+            Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
+          </div>
+          <div class="level">
+            <span title="Nível">Nível</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">
+            
+            Divindade:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="attributes attributes-6">
+      <div class="attr" title="Força">FOR<input class="editable" value="{{ ficha.estatisticas.forca }}" disabled type="number" data-save="estatisticas.forca"></div>
+      <div class="attr" title="Destreza">DES<input class="editable" value="{{ ficha.estatisticas.agilidade }}" disabled type="number" data-save="estatisticas.agilidade"></div>
+      <div class="attr" title="Constituição">CON<input class="editable" value="{{ ficha.estatisticas.vigor }}" disabled type="number" data-save="estatisticas.vigor"></div>
+      <div class="attr" title="Intelecto">INT<input class="editable" value="{{ ficha.estatisticas.intelecto }}" disabled type="number" data-save="estatisticas.intelecto"></div>
+      <div class="attr" title="Sabedoria">SAB<input class="editable" value="{{ ficha.estatisticas.presenca }}" disabled type="number" data-save="estatisticas.presenca"></div>
+      <div class="attr" title="Carisma">CAR<input class="editable" value="{{ ficha.estatisticas.bloqueio }}" disabled type="number" data-save="estatisticas.bloqueio"></div>
+    </div>
+  
+  <div class="section">
+    <div class="label">VIDA</div>
+    <div class="stat">
+      <input class="editable" disabled id="pvAtual" type="number" value="{{ ficha.estatisticas.pv_atual }}" data-save="estatisticas.pv_atual" style="width:60px;"> 
+      <input class="editable" disabled id="pvMax" type="number" value="{{ ficha.estatisticas.pv_maximos }}" data-save="estatisticas.pv_maximos" style="width: 60px; text-align: right;"> 
+    </div>
+    <div class="bar-bg"><div class="bar" id="pvBar"></div></div>
+  </div>
+
+  <div class="section">
+    <div class="label">MANA</div>
+    <div class="stat">
+      <!-- Os id's de mana se mantém os mesmos de determinação pra não precisar alterar o JavaScript e CSS -->
+      <input class="editable" disabled id="detAtual" type="number" value="{{ ficha.estatisticas.pe_atual }}" data-save="estatisticas.pe_atual" style="width:60px;">
+      /
+      <input class="editable" disabled id="detMax" type="number" value="{{ ficha.estatisticas.pe_maximos }}" data-save="estatisticas.pe_maximos" style="width:60px; text-align: right;">
+    </div>
+    <div class="bar-bg"><div class="bar" id="detBar"></div></div>
+  </div>
+
+  <div class="section defenses">
+    <div>
+      <div class="label">DEFESA</div>
+      <input class="editable" disabled type="number" value="{{ ficha.estatisticas.defesa }}" data-save="estatisticas.defesa">
+    </div>
+    <div>
+      <div class="label">DESLOCAMENTO</div>
+      <input class="editable" disabled type="number" value="{{ ficha.estatisticas.esquiva }}" data-save="estatisticas.esquiva">
+    </div>
+    <div>
+      <div class="label">TAMANHO</div>
+      <input class="editable" disabled type="text" value="{{ ficha.tamanho }}" data-save="tamanho">
+    </div>
+  </div>
+
+  <div class="section">
+    <div>
+      <table width="100%">
+        <td class="list" width="111.68">Ataque</td>
+        <td class="list" width="111.68">Dano</td>
+        <td class="listend" width="111.68">Crítico</td>
+      </table>  
+    </div>
+
+    <div class="attacks" id="attacks">
+
+      {% for ataque in ficha.ataques.all %} 
+        <div class="attack-row">
+          <br>
+          <table width="100%">
+            <td class="atk list" width="111.68">
+              <input class="editable attack-name ataque" disabled value="{{ ataque.nome }}" data-save="nome" data-ataque-id="{{ ataque.id }}">
+            </td>
+            <td class="atk list" width="111.68">
+              <input class="editable attack-damage ataque" disabled value="{{ ataque.dano }}" data-save="dano" data-ataque-id="{{ ataque.id }}">
+            </td>
+            <td class="atk listend" width="111.68">
+              <input class="editable attack-critical ataque" disabled value="{{ ataque.critico }}" data-save="critico" data-ataque-id="{{ ataque.id }}">
+            </td>
+          </table>    
+          <button class="remove-item" data-ataque-id="{{ ataque.id }}" onclick="remover('ataque', '{{ ataque.id }}')">Remover</button>    
+        </div>
+      {% endfor %}
+
+    </div>
+    <button class="edit-btn" onclick="adicionar('ataque')">Adicionar ataque</button>
+  </div>
+
+  <button class="btn btn-success export naoficha" onclick="exportFichaJSON()">
+    <i class="bi bi-download"></i> Exportar Ficha
+  </button>
+
+  <input type="file" id="importJson" accept=".json" hidden class="import naoficha" onchange="importarFichaJSON(event)">
+  <button class="btn btn-primary import naoficha" onclick="document.getElementById('importJson').click()">
+    <i class="bi bi-upload"></i> Importar Ficha
+  </button>
+
+  <a href="{% url 'fichas:home' %}" class="ama"><button class="btn" id="retornar">Retornar</button></a>
+
+  <div class="dice-control">
+
+    <input id="diceQtd" class="dados" value="1" min="1" style="width:20px;" data-save="quantidade" title="Quantidade de dados a rolar">
+
+    <select class="dice dados" id="diceType" data-save="lados">
+      <option value="4">d4</option>
+      <option value="6">d6</option>
+      <option value="8" selected>d8</option>
+      <option value="10">d10</option>
+      <option value="12">d12</option>
+      <option value="20">d20</option>
+      <option value="100">d100</option>
+    </select>
+
+
+    +<input id="diceBonus" value="0" style="width:35px;" title="Bônus" class="dados">
+
+
+    <button class="dice" onclick="rolarDados()">
+      <i class="bi bi-dice-6"></i> 
+    </button>
+
+  </div>
+
+  <div id="dice-result" class="dice-result">
+    <div id="dice-rolls"></div>
+    <div id="dice-max"></div>
+    <div id="dice-min"></div>
+    <div id="dice-total"></div>
+  </div>
+  
+</body>
+</html>

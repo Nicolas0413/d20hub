@@ -1,0 +1,318 @@
+body {
+    background-color: #1F1F1F;
+    color: white;
+    max-width: 100vw !important;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+    font-family: 'Franklin Gothic Medium', Courier, monospace;
+}
+
+button {
+    background-color: rgb(192, 33, 33);
+    color: rgb(247, 237, 237);
+    padding: 12px;
+    border: none;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 200px;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px 2px rgb(131, 21, 2);
+    transition: all 0.25s;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(247, 40, 40);
+    box-shadow: 0px 0px 10px 5px rgba(131, 21, 2, 0.5);
+}
+
+button:active {
+    opacity: 0.8;
+    box-shadow: 0px 0px 5px 2px rgba(255, 38, 0, 0.5);
+}
+
+.divfichas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1vh;
+    width: 400px;
+    background-color: #141414;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    box-shadow: 0px 0px 10px 1px rgb(131, 21, 2);
+    transition: all 0.25s;
+}
+
+.divfichas:hover {
+    box-shadow: 0px 0px 5px 8px rgb(131, 21, 2);
+    transform: translateY(-3px);
+}
+
+#fichasContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6vw;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputficha {
+    font-size: 20px;
+    font-weight: bolder;
+    margin-bottom: 5px;
+    padding: 7px;
+    width: 80%;
+    color: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+}
+
+.inputficha::placeholder {
+    font-weight: lighter;
+    color: rgb(255, 255, 255);
+    opacity: 0.2;
+}
+
+.acessarBtn, .excluirBtn {
+    margin-left: 0px;
+    padding: 7px 12px;
+    background-color: rgb(192, 33, 33);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 35%;
+}
+
+.botoes-fichas {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    margin: 20px;
+    margin-right: 100px;
+}
+
+.excluirBtn {
+    background-color: #343a40;
+    color: #fff;
+    border-color: #495057;
+    box-shadow: 0 0 10px #495057;
+}
+
+.excluirBtn:hover {
+    background-color: #495057;
+    color: rgb(255, 38, 0);
+    box-shadow: 0 0 10px #495057;
+}
+
+.toolbar {
+    display: flex;
+    background-color: rgb(17, 17, 17);
+    width: 100vw;
+    height: 18vh;
+    margin-bottom: 5vh;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 0 0px 10px 1px rgb(131, 21, 2);
+    text-shadow: 0 0 8px rgba(139, 0, 0, 0.8);
+}
+
+.botoesDiv {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    background: rgba(54, 54, 54, 0.6);
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+    outline: none;
+    font-family: 'Franklin Gothic Medium', Courier, monospace;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+#retornar { 
+    background: rgb(192,33,33);
+    color: rgb(247,237,237);
+    padding: 8px 20px;
+    border: none;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;
+    border-radius: 200px;
+    font-size: 20px;
+    box-shadow: 0 0 10px 2px rgb(131,21,2);
+    transition: all 0.25s;
+    text-decoration: none;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+ }
+
+#retornar:hover { background: rgb(247,40,40); box-shadow: 0 0 10px 5px rgba(131,21,2,0.5); }
+#retornar:active { opacity: 0.8; box-shadow: 0 0 5px 2px rgba(255,38,0,0.5); }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #141414;
+  color: white;
+  border: 1px solid rgb(192, 33, 33);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(131, 21, 2, 0.6);
+  font-family: 'Courier New', Courier, monospace;
+  scrollbar-color: #831502 #0a0a0a;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #111;
+  border-bottom: 1px solid rgb(192, 33, 33);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.close-modal {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: white;
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  color: rgb(247, 40, 40);
+  background: none;
+  box-shadow: none;
+  transform: scale(1.15);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-botoes button {
+    padding: 7px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+#mensagemModalCancelar {
+    background: #333;
+    box-shadow: none;
+}
+
+#mensagemModalCancelar:hover {
+    background: #444;
+}
+
+#mensagemModalConfirmar {
+    background: rgb(192, 33, 33);
+}
+
+#mensagemModalTexto {
+    margin: 0;
+    text-align: left;
+    color: #ddd;
+}
+
+@media (max-width: 720px) {
+    .toolbar {
+        height: auto;
+        min-height: 18vh;
+        padding: 30px 80px;
+        box-sizing: border-box;
+    }
+
+    .toolbar h1 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+    }
+
+    #retornar {
+        top: 15px;
+        left: 15px;
+        font-size: 16px;
+        padding: 6px 14px;
+    }
+}
+
+@media (max-width: 420px) {
+    .toolbar {
+        padding: 60px 20px 25px;
+    }
+
+    .toolbar h1 {
+        font-size: 1.4rem;
+    }
+
+    #retornar {
+        top: 12px;
+        left: 12px;
+    }
+}
+
+.sistema-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sistema-opcao {
+    width: 100%;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
+.etiquetaSistema {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgb(247, 40, 40);
+    margin-bottom: 6px;
+}
