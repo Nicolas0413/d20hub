@@ -29,7 +29,7 @@
   </script>
 </head>
 
-<body>
+<body data-sistema="{{ ficha.sistema }}">
   <div class="sheet" data-id="{{ ficha.id }}">
     <header>
       <div style="margin-bottom: 10px; text-align: center;">
@@ -56,12 +56,13 @@
             {% endif %} 
           </div>
           <div class="level">
-            <span title="Nex">Nex</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
+            Raça:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha"> &nbsp
             Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
           </div>
           <div class="level">
-            Trilha:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
-            Origem:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+            <span title="Nível">Nível</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">
+            
+            Divindade:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
           </div>
         </div>
       </div>

@@ -15,20 +15,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <!--arquivo css-->
-  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.1">
+  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.2">
 
   <!--bootstrap javascript-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
   <!--javascript ficha-->
-  <script src="{% static 'js/ficha.js' %}?v=1.12" defer></script>
+  <script src="{% static 'js/ficha.js' %}?v=1.10" defer></script>
   
   <script>
     window.csrftoken = '{{ csrf_token }}';
   </script>
 </head>
 
-<body>
+<body data-sistema="{{ ficha.sistema }}">
   <div class="sheet" data-id="{{ ficha.id }}">
     <header>
       <div style="margin-bottom: 10px; text-align: center;">
@@ -55,26 +55,27 @@
             {% endif %} 
           </div>
           <div class="level">
-            <span title="Nex">Nex</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
+            Raça:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha"> &nbsp
             Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
           </div>
           <div class="level">
-            Trilha:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
-            Origem:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+            <span title="Nível">Nível</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">
+            
+            Divindade:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
           </div>
         </div>
       </div>
     </header>
 
-
-    <div class="attributes">
-    <div class="attr" title="Força">FOR<input class="editable" value="{{ ficha.estatisticas.forca }}" disabled type="number" data-save="estatisticas.forca"></div>
-    <div class="attr" title="Agilidade">AGI<input class="editable" value="{{ ficha.estatisticas.agilidade }}" disabled type="number" data-save="estatisticas.agilidade"></div>
-    <div class="attr" title="Intelecto">INT<input class="editable" value="{{ ficha.estatisticas.intelecto }}" disabled type="number" data-save="estatisticas.intelecto"></div>
-    <div class="attr" title="Presença">PRE<input class="editable" value="{{ ficha.estatisticas.presenca }}" disabled type="number" data-save="estatisticas.presenca"></div>
-    <div class="attr" title="Vigor">VIG<input class="editable" value="{{ ficha.estatisticas.vigor }}" disabled type="number" data-save="estatisticas.vigor"></div>
-  </div>
-
+    <div class="attributes attributes-6">
+      <div class="attr" title="Força">FOR<input class="editable" value="{{ ficha.estatisticas.forca }}" disabled type="number" data-save="estatisticas.forca"></div>
+      <div class="attr" title="Destreza">DES<input class="editable" value="{{ ficha.estatisticas.agilidade }}" disabled type="number" data-save="estatisticas.agilidade"></div>
+      <div class="attr" title="Constituição">CON<input class="editable" value="{{ ficha.estatisticas.vigor }}" disabled type="number" data-save="estatisticas.vigor"></div>
+      <div class="attr" title="Intelecto">INT<input class="editable" value="{{ ficha.estatisticas.intelecto }}" disabled type="number" data-save="estatisticas.intelecto"></div>
+      <div class="attr" title="Sabedoria">SAB<input class="editable" value="{{ ficha.estatisticas.presenca }}" disabled type="number" data-save="estatisticas.presenca"></div>
+      <div class="attr" title="Carisma">CAR<input class="editable" value="{{ ficha.estatisticas.carisma }}" disabled type="number" data-save="estatisticas.carisma"></div>
+    </div>
+  
   <div class="section">
     <div class="label">VIDA</div>
     <div class="stat">
@@ -85,8 +86,9 @@
   </div>
 
   <div class="section">
-    <div class="label">DETERMINAÇÃO</div>
+    <div class="label">MANA</div>
     <div class="stat">
+      <!-- Os id's de mana se mantém os mesmos de determinação pra não precisar alterar o JavaScript e CSS -->
       <input class="editable" disabled id="detAtual" type="number" value="{{ ficha.estatisticas.pe_atual }}" data-save="estatisticas.pe_atual" style="width:60px;">
       /
       <input class="editable" disabled id="detMax" type="number" value="{{ ficha.estatisticas.pe_maximos }}" data-save="estatisticas.pe_maximos" style="width:60px; text-align: right;">
@@ -100,12 +102,12 @@
       <input class="editable" disabled type="number" value="{{ ficha.estatisticas.defesa }}" data-save="estatisticas.defesa">
     </div>
     <div>
-      <div class="label">ESQUIVA</div>
+      <div class="label">DESLOCAMENTO</div>
       <input class="editable" disabled type="number" value="{{ ficha.estatisticas.esquiva }}" data-save="estatisticas.esquiva">
     </div>
     <div>
-      <div class="label">BLOQUEIO</div>
-      <input class="editable" disabled type="number" value="{{ ficha.estatisticas.bloqueio }}" data-save="estatisticas.bloqueio">
+      <div class="label">TAMANHO</div>
+      <input class="editable" disabled type="text" value="{{ ficha.tamanho }}" data-save="tamanho">
     </div>
   </div>
 

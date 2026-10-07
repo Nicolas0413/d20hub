@@ -28,16 +28,16 @@
   </script>
 </head>
 
-<body>
+<body data-sistema="{{ ficha.sistema }}">
 <div class="sheet" data-id="{{ ficha.id }}">
   <header>
     <div style="margin-bottom: 10px; text-align: center;">
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">Ficha</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">Pericias</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">Habilidades</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">Inventário</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">Detalhes</a>
-      </div>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">Ficha</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">Pericias</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">Habilidades</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">Inventário</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">Detalhes</a>
+    </div>
     <div class="top">
       <div class="image-wrapper">
         <img src="{{ ficha.foto_personagem.url }}" data-save="foto_personagem" class="photo" id="charImage" alt="Foto do personagem">
@@ -55,12 +55,13 @@
           {% endif %} 
         </div>
         <div class="level">
-          <span title="Nex">Nex</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
+          Raça:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha"> &nbsp
           Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
         </div>
         <div class="level">
-          Trilha:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
-          Origem:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+          <span title="Nível">Nível</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">
+          
+          Divindade:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
         </div>
       </div>
     </div>
@@ -75,27 +76,23 @@
       </div> 
       <div class="accordion accordion-custom" id="accordionExample">
         {% for habilidade in ficha.habilidades.all %}
-        <div class="accordion accordion-custom" id="accordionHabilidades">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#habilidade{{ habilidade.id }}">
-                <div class="item-row" style="width:100%; display: flex; gap: 10px;">
-                  <input id="nome-{{ habilidade.id }}" class="editable habilidade" disabled value="{{ habilidade.nome }}" data-save="nome" data-habilidade-id="{{ habilidade.id }}">
-                  <input id="custo-{{ habilidade.id }}" class="editable habilidade" disabled value="{{ habilidade.custo }}" data-save="custo" data-habilidade-id="{{ habilidade.id }}">
-                  <input id="pagina-{{ habilidade.id }}" class="editable habilidade" disabled value="{{ habilidade.pagina }}" data-save="pagina" data-habilidade-id="{{ habilidade.id }}">
-                </div>
-              </button>
-            </h2>
-            <div id="habilidade{{ habilidade.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionHabilidades">
-              <div class="accordion-body">
-                <textarea id="descricao-{{ habilidade.id }}" class="editable habilidade" disabled placeholder="Descrição da habilidade" data-save="descricao" data-habilidade-id="{{ habilidade.id }}">{{ habilidade.descricao }}</textarea>
-                <button class="remove-item" data-habilidade-id="{{ habilidade.id }}" onclick="remover('habilidade', '{{ habilidade.id }}')">
-                  Remover habilidade
-                </button>
-              </div>
+          <table width="100%">
+            <td class="atk" width="111.68">
+              <input id="nome-{{ habilidade.id }}" class="editable habilidade" disabled value="{{ habilidade.nome }}" data-save="nome" data-habilidade-id="{{ habilidade.id }}">
+            </td>
+            <td class="atk" width="111.68">
+              <input id="custo-{{ habilidade.id }}" class="editable habilidade" disabled value="{{ habilidade.custo }}" data-save="custo" data-habilidade-id="{{ habilidade.id }}">
+            </td>
+            <td class="atk2" width="111.68">
+              <input id="pagina-{{ habilidade.id }}" class="editable habilidade" disabled value="{{ habilidade.pagina }}" data-save="pagina" data-habilidade-id="{{ habilidade.id }}">
+            </td>
+          </table>
+          <div id="{{ habilidade.id }}" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <textarea id="descricao-{{ habilidade.id }}" class="editable habilidade" disabled placeholder="Descrição da habilidade" data-save="descricao" data-habilidade-id="{{ habilidade.id }}">{{ habilidade.descricao }}</textarea>
+              <button class="remove-item" data-habilidade-id="{{ habilidade.id }}" onclick="remover('habilidade', '{{ habilidade.id }}')">Remover</button>
             </div>
           </div>
-        </div>
         {% endfor %}
       </div>
     </div>

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <!--arquivo css-->
-  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.1">
+  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.3 ">
 
   <!--bootstrap javascript-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -83,7 +83,7 @@
       <div>Categoria IV: <input class="editable" disabled value="{{ ficha.inventario.cat4 }}" style="width: 18px;" data-save="inventario.cat4" id="cat4">/ <span id="limit-catIV">0</span></div>
     </div>
     <br>
-    <div>Carga total: <input class="editable" disabled value="{{ ficha.inventario.carga_atual }}" style="width: 18px;" data-save="inventario.carga_atual" id="cargaTotal">/ <input class="editable" disabled value="{{ ficha.inventario.carga_maxima }}" style="width: 18px;" data-save="inventario.carga_maxima" id="carga_maxima"></div>
+    <div>Carga total: <input class="editable" disabled value="{{ ficha.inventario.carga_atual }}" data-save="inventario.carga_atual" id="cargaTotal">/ <input class="editable" disabled value="{{ ficha.inventario.carga_maxima }}" data-save="inventario.carga_maxima" id="cargaMaxima"></div>
 
     <div class="section">
     <div>

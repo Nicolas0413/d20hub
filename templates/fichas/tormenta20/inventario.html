@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <!--arquivo css-->
-  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.1">
+  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.3">
 
   <!--bootstrap javascript-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -27,7 +27,7 @@
     window.csrftoken = '{{ csrf_token }}';
   </script>
 </head>
-<body>
+<body data-sistema="{{ ficha.sistema }}">
 <div class="sheet" data-id="{{ ficha.id }}">
   <header>
     <div style="margin-bottom: 10px; text-align: center;">
@@ -54,52 +54,34 @@
           {% endif %} 
         </div>
         <div class="level">
-          <span title="Nex">Nex</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
+          Raça:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha"> &nbsp
           Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
         </div>
         <div class="level">
-          Trilha:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
-          Origem:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+          <span title="Nível">Nível</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">
+          
+          Divindade:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
         </div>
       </div>
     </div>
   </header>
 
   <div class="section">
-
-    <div class="label">Patente</div>
-      <select class="patente " id="patenteSelect" data-save="patente" onchange="atualizarPatente()" data-patente="{{ ficha.patente }}">
-        <option value="Recruta">Recruta</option>
-        <option value="Operador">Operador</option>
-        <option value="Agente_Especial">Agente Especial</option>
-        <option value="Oficial_de_Operações">Oficial de operações</option>
-        <option value="Agente_de_Elite">Agente de Elite</option>
-      </select>
-    </div>
-    <div class="inventory-limits">
-      <div>Categoria  I: <input class="editable" disabled value="{{ ficha.inventario.cat1 }}" style="width: 18px;" data-save="inventario.cat1" id="cat1">/ <span id="limit-catI">0</span></div>
-      <div>Categoria II: <input class="editable" disabled value="{{ ficha.inventario.cat2 }}" style="width: 18px;" data-save="inventario.cat2" id="cat2">/ <span id="limit-catII">0</span></div>
-      <div>Categoria III: <input class="editable" disabled value="{{ ficha.inventario.cat3 }}" style="width: 18px;" data-save="inventario.cat3" id="cat3">/ <span id="limit-catIII">0</span></div>
-      <div>Categoria IV: <input class="editable" disabled value="{{ ficha.inventario.cat4 }}" style="width: 18px;" data-save="inventario.cat4" id="cat4">/ <span id="limit-catIV">0</span></div>
-    </div>
-    <br>
-    <div>Carga total: <input class="editable" disabled value="{{ ficha.inventario.carga_atual }}" style="width: 18px;" data-save="inventario.carga_atual" id="cargaTotal">/ <input class="editable" disabled value="{{ ficha.inventario.carga_maxima }}" style="width: 18px;" data-save="inventario.carga_maxima" id="carga_maxima"></div>
+    <div>Carga total: <input class="editable" disabled value="{{ ficha.inventario.carga_atual }}" data-save="inventario.carga_atual" id="cargaTotal">/ <input class="editable" disabled value="{{ ficha.inventario.carga_maxima }}" data-save="inventario.carga_maxima" id="cargaMaxima"></div>
 
     <div class="section">
     <div>
-      <div class="item-row" style="width:85%; margin-left: 15px; text-align: center;">
+      <div class="item-row item-row-2" style="width:85%; margin-left: 15px; text-align: center;">
             <h2 title="Nome do item">Item</h2>
-            <h2 title="Cada personagem pode possuir um certo número de itens de cada categoria dependendo da sua patente, mas pode ter quantos itens quiser de categoria 0">Categoria</h2>
-            <h2 title="Cada item ocupa uma quantidade de espaços dependendo de seu tamanho e peso, por padrão, seu máximo de espaços é igual a 5 vezes a sua força (ou 2 caso sua força seja 0)">Espaços</h2>
-      </div> 
+            <h2 title="Cada item ocupa uma quantidade de espaços dependendo de seu tamanho e peso">Espaços</h2>
+      </div>
       {% for item in ficha.inventario.itens.all %}
         <div class="accordion accordion-custom" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#item{{ item.id }}">
-                <div class="item-row" style="width:100%">
+                <div class="item-row item-row-2" style="width:100%">
                   <input class="editable item" disabled value="{{ item.nome }}" data-save="nome" data-item-id="{{ item.id }}">
-                  <input class="editable item" disabled value="{{ item.categoria }}" data-save="categoria" data-item-id="{{ item.id }}">
                   <input class="editable item" disabled value="{{ item.espaco }}" data-save="espaco" data-item-id="{{ item.id }}">
                 </div>
               </button>
