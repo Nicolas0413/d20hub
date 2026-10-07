@@ -15,6 +15,7 @@ class Ficha(models.Model):
     trilha = models.CharField(max_length=32, default="Aniquilador")
     origem = models.CharField(max_length=32, default="Acadêmico")
     patente = models.CharField(max_length=32, default="Recruta")
+    tamanho = models.CharField(max_length=16, default="Médio")
     anotacoes = models.TextField(default="Anotações gerais sobre o personagem e missões")
     aparencia = models.TextField(default="Descrição física do personagem como: gênero, idade, altura etc.")
     historia = models.TextField(default="História do personagem (de onde veio, qual seu objetivo etc.)")
@@ -31,6 +32,7 @@ class Estatisticas(models.Model):
     vigor = models.IntegerField(default=1)
     intelecto = models.IntegerField(default=1)
     presenca = models.IntegerField(default=1)
+    carisma = models.IntegerField(default=1)
     pv_atual = models.IntegerField(null=True, blank=True, default=1)
     pv_maximos = models.IntegerField(null=True, blank=True, default=1)
     pe_atual = models.IntegerField(null=True, blank=True, default=1)
@@ -50,6 +52,8 @@ class Pericia(models.Model):
     descricao = models.TextField(default="")
     pagina = models.CharField(max_length=128, default="")
     dados = models.IntegerField(null=True, blank=True, default=1)
+    ATRIBUTOS = [("FOR", "FOR"), ("DES", "DES"), ("CON", "CON"), ("INT", "INT"), ("SAB", "SAB"), ("CAR", "CAR")]
+    atributo = models.CharField(max_length=3, choices=ATRIBUTOS, default="FOR")
     treinamento = models.CharField(max_length=32, default="")
     bonus = models.IntegerField(null=True, blank=True, default=0)
 

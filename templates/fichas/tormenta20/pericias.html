@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <!--arquivo css-->
-  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.3">
+  <link rel="stylesheet" href="{% static 'css/ficha.css' %}?v=1.1">
 
   <!--bootstrap javascript-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -82,13 +82,7 @@
           <div class="attack">
             <table width="100%">
               <td class="list" width="40%"><input id="nome.{{ pericia.id }}" class="editable pericia" style="text-align: left;" disabled value="{{ pericia.nome }}" data-save="nome" data-pericia-id="{{ pericia.id }}"></td>
-              <td class="list" width="20%">
-                <select id="atributo.{{ pericia.id }}" class="editable pericia atributo-select" disabled data-save="atributo" data-pericia-id="{{ pericia.id }}">
-                  {% for valor, rotulo in pericia.ATRIBUTOS %}
-                    <option value="{{ valor }}" {% if pericia.atributo == valor %}selected{% endif %}>{{ rotulo }}</option>
-                  {% endfor %}
-                </select>
-              </td>
+              <td class="list" width="20%"><input id="dados.{{ pericia.id }}" class="editable pericia" disabled value="{{pericia.dados}}" data-save="dados" data-pericia-id="{{ pericia.id }}"></td>
               <td class="list" width="20%"><input  id="bonus.{{ pericia.id }}" class="editable pericia" disabled value="{{pericia.bonus}}" data-save="bonus" data-pericia-id="{{ pericia.id }}"></td>
               <td class="listend" width="20%"><input id="treinamento.{{ pericia.id }}" class="editable pericia" disabled value="{{pericia.treinamento}}" data-save="treinamento" data-pericia-id="{{ pericia.id }}"></td>
             </table>

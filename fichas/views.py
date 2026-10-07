@@ -29,12 +29,17 @@ Paginas = {
 }
 
 Campos_Permitidos = {
-    "ficha": ["visibilidade", "editabilidade", "nome", "personagem", "foto_personagem", "nex", "classe", "trilha", "origem", "patente", "anotacoes", "aparencia", "historia", "token_personagem", "estatisticas.forca", "estatisticas.agilidade", "estatisticas.vigor", "estatisticas.intelecto", "estatisticas.presenca", "estatisticas.pv_atual", "estatisticas.pv_maximos", "estatisticas.pe_atual", "estatisticas.pe_maximos", "estatisticas.sanidade_atual", "estatisticas.sanidade_maxima", "estatisticas.defesa", "estatisticas.esquiva", "estatisticas.bloqueio", "inventario.carga_atual", "inventario.carga_maxima", "inventario.cat1", "inventario.cat2", "inventario.cat3", "inventario.cat4"],
+    "ficha": ["visibilidade", "editabilidade", "nome", "personagem", "foto_personagem", "nex", "classe", "trilha", "origem", "patente", "anotacoes", "tamanho", "aparencia", "historia", "token_personagem", "estatisticas.forca", "estatisticas.agilidade", "estatisticas.vigor", "estatisticas.intelecto", "estatisticas.presenca", "estatisticas.carisma", "estatisticas.pv_atual", "estatisticas.pv_maximos", "estatisticas.pe_atual", "estatisticas.pe_maximos", "estatisticas.sanidade_atual", "estatisticas.sanidade_maxima", "estatisticas.defesa", "estatisticas.esquiva", "estatisticas.bloqueio", "inventario.carga_atual", "inventario.carga_maxima", "inventario.cat1", "inventario.cat2", "inventario.cat3", "inventario.cat4"],
     "ataque": ["nome", "dano", "critico"],
-    "pericia": ["nome", "descricao", "pagina", "dados", "bonus", "treinamento"],
+    "pericia": ["nome", "descricao", "pagina", "dados", "bonus", "treinamento", "atributo"],
     "habilidade": ["nome", "descricao", "pagina", "custo"],
     "item": ["nome", "categoria", "espaco", "descricao"],
     "imagem": ["foto_personagem", "token_personagem"]
+}
+
+Padroes_Sistema = {
+    "ordem_paranormal": {},
+    "tormenta20": {"nex": 1, "classe": "Guerreiro", "trilha": "Humano", "origem": ""},
 }
 
 # Funções uteis 
@@ -56,6 +61,9 @@ def salvar(request, campospermitidos, objeto):
             valor = int(valor)
         except (TypeError, ValueError):
             return {"status": False, "mensagem": "Valor inválido para campo numérico."}
+    
+    if campo == "atributo" and valor not in dict(Pericia.ATRIBUTOS):
+        return {"status": False, "mensagem": "Atributo inválido."}
 
     setattr(objeto, campo, valor)
     objeto.save()
@@ -132,7 +140,7 @@ def criar_ficha_view(request):
         sistema = dados.get("sistema", "ordem_paranormal")
         if sistema not in dict(Ficha.SISTEMAS):
             return JsonResponse({"status": False, "mensagem": "Sistema inválido."})
-        ficha = Ficha.objects.create(usuario=request.user, nome="", sistema=sistema)
+        ficha = Ficha.objects.create(usuario=request.user, nome="", sistema=sistema, **Padroes_Sistema.get(sistema, {}))
         Estatisticas.objects.create(ficha=ficha)
         Inventario.objects.create(ficha=ficha)
         return JsonResponse({"id": ficha.id, "nome": ficha.nome, "sistema": ficha.sistema, "status": True})
@@ -255,11 +263,11 @@ def exportar_view(request, ficha_id):
     ataques = Ataque.objects.filter(ficha=ficha)
     itens = Item.objects.filter(inventario=ficha.inventario)
     
-    dados_ficha = {"nome": ficha.nome, "personagem": ficha.personagem, "nex": ficha.nex, "classe": ficha.classe, "trilha": ficha.trilha, "origem": ficha.origem, "patente": ficha.patente, "anotacoes": ficha.anotacoes, "aparencia": ficha.aparencia, "historia": ficha.historia}
+    dados_ficha = {"nome": ficha.nome, "personagem": ficha.personagem, "nex": ficha.nex, "classe": ficha.classe, "trilha": ficha.trilha, "origem": ficha.origem, "patente": ficha.patente, "tamanho": ficha.tamanho, "anotacoes": ficha.anotacoes, "aparencia": ficha.aparencia, "historia": ficha.historia}
     dados = {"sistema": ficha.sistema, "dados_ficha": dados_ficha, "estatisticas": estatisticas, "pericias": pericias, "habilidades": habilidades, "ataques": ataques, "inventario": inventario, "itens": itens}
-    estatisticas = {"forca": status.forca, "agilidade": status.agilidade, "vigor": status.vigor, "intelecto": status.intelecto, "presenca": status.presenca, "pv_atual": status.pv_atual, "pv_maximos": status.pv_maximos, "pe_atual": status.pe_atual, "pe_maximos": status.pe_maximos, "sanidade_atual": status.sanidade_atual, "sanidade_maxima": status.sanidade_maxima, "defesa": status.defesa, "esquiva": status.esquiva, "bloqueio": status.bloqueio}
+    estatisticas = {"forca": status.forca, "agilidade": status.agilidade, "vigor": status.vigor, "intelecto": status.intelecto, "presenca": status.presenca, "carisma": status.carisma, "pv_atual": status.pv_atual, "pv_maximos": status.pv_maximos, "pe_atual": status.pe_atual, "pe_maximos": status.pe_maximos, "sanidade_atual": status.sanidade_atual, "sanidade_maxima": status.sanidade_maxima, "defesa": status.defesa, "esquiva": status.esquiva, "bloqueio": status.bloqueio}
     inventario = {"carga_atual": inventario.carga_atual, "carga_maxima": inventario.carga_maxima, "cat1": inventario.cat1, "cat2": inventario.cat2, "cat3": inventario.cat3, "cat4": inventario.cat4}
-    pericias = list(pericias.values("nome", "descricao", "pagina", "dados", "treinamento", "bonus"))
+    pericias = list(pericias.values("nome", "descricao", "pagina", "dados", "treinamento", "bonus", "atributo"))
     habilidades = list(habilidades.values("nome", "descricao", "pagina", "custo"))
     ataques = list(ataques.values("nome", "dano", "critico"))
     itens = list(itens.values("nome", "categoria", "espaco", "descricao"))
