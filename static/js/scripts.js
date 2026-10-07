@@ -1,5 +1,9 @@
 var contador = 0;
 const nome = document.getElementById("nome-usuario");
+const NOMES_SISTEMAS = {
+    ordem_paranormal: "Ordem Paranormal",
+    tormenta20: "Tormenta 20"
+};
 
 if (nome) {
     const boasVindas = document.getElementById("texto-boas-vindas");
@@ -54,11 +58,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function criarDivFicha(id, nome) {
+function criarDivFicha(id, nome, sistema) {
     const div = document.createElement("div");
     div.classList.add("divfichas");
     div.id = id;
     fichasContainer.appendChild(div);
+
+    const etiqueta = document.createElement("span");
+    etiqueta.classList.add("etiquetaSistema");
+    etiqueta.textContent = NOMES_SISTEMAS[sistema] || sistema;
+    div.appendChild(etiqueta);
 
     const input = document.createElement("input");
     input.type = "text";
@@ -160,7 +169,7 @@ function carregarFichas() {
     .then(res => res.json())
     .then(data => {
         data.forEach(ficha => {
-            criarDivFicha(ficha.id, ficha.nome);
+            criarDivFicha(ficha.id, ficha.nome, ficha.sistema);
             contador++;
         });
         document.getElementById("contadorFichas").textContent = `Fichas: ${contador}/15`;
@@ -169,6 +178,8 @@ function carregarFichas() {
 
 if (document.getElementById("fichasContainer")) {
     carregarFichas();
+    const sistemaModal = document.getElementById("sistemaModal");
+
     document.getElementById("criarFicha").addEventListener("click", () => {
         if (contador >= 15) {
             mostrarMensagem(
@@ -177,24 +188,23 @@ if (document.getElementById("fichasContainer")) {
             );
             return;
         }
-        fetch("/fichas/criar/", {
-            method: "POST",
-            headers: {
-                "X-CSRFToken": csrftoken
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === true) {
-                criarDivFicha(data.id, data.nome);
-                contador++;
-                document.getElementById("contadorFichas").textContent = `Fichas: ${contador}/15`;
-            } else {
-                mostrarMensagem(
-                    "Erro",
-                    "Não foi possível criar a ficha. Tente novamente."
-                );
-            }
+        sistemaModal.style.display = "flex";
+    });
+
+    document.getElementById("sistemaModalFechar").addEventListener("click", () => {
+        sistemaModal.style.display = "none";
+    });
+
+    sistemaModal.addEventListener("click", (e) => {
+        if (e.target === sistemaModal) {
+            sistemaModal.style.display = "none";
+        }
+    });
+
+    document.querySelectorAll(".sistema-opcao").forEach(botao => {
+        botao.addEventListener("click", () => {
+            sistemaModal.style.display = "none";
+            criarFicha(botao.dataset.sistema);
         });
     });
 
@@ -225,6 +235,27 @@ if (document.getElementById("fichasContainer")) {
                 });
             }
         );
+    });
+}
+
+function criarFicha(sistema) {
+    fetch("/fichas/criar/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken
+        },
+        body: JSON.stringify({ sistema: sistema })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === true) {
+            criarDivFicha(data.id, data.nome, data.sistema);
+            contador++;
+            document.getElementById("contadorFichas").textContent = `Fichas: ${contador}/15`;
+        } else {
+            mostrarMensagem("Erro", data.mensagem || "Não foi possível criar a ficha. Tente novamente.");
+        }
     });
 }
 

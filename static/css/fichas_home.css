@@ -296,3 +296,23 @@ input {
         left: 12px;
     }
 }
+
+.sistema-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sistema-opcao {
+    width: 100%;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
+.etiquetaSistema {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgb(247, 40, 40);
+    margin-bottom: 6px;
+}
