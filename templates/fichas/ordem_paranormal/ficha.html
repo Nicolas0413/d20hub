@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% load static %}
+  {% load i18n %}
   <link rel="icon" type="image/x-icon" href="{% static 'img/d20hub.ico' %}">
   <title>D20HUB</title>
 
@@ -56,11 +57,11 @@
           </div>
           <div class="level">
             <span title="Nex">Nex</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
-            Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
+            {% trans "Classe:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
           </div>
           <div class="level">
-            Trilha:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
-            Origem:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+            {% trans "Trilha:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
+            {% trans "Origem:" %}<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
           </div>
         </div>
       </div>
@@ -76,7 +77,7 @@
   </div>
 
   <div class="section">
-    <div class="label">VIDA</div>
+    <div class="label">{% trans "VIDA" %}</div>
     <div class="stat">
       <input class="editable" disabled id="pvAtual" type="number" value="{{ ficha.estatisticas.pv_atual }}" data-save="estatisticas.pv_atual" style="width:60px;"> 
       <input class="editable" disabled id="pvMax" type="number" value="{{ ficha.estatisticas.pv_maximos }}" data-save="estatisticas.pv_maximos" style="width: 60px; text-align: right;"> 
@@ -85,7 +86,7 @@
   </div>
 
   <div class="section">
-    <div class="label">DETERMINAÇÃO</div>
+    <div class="label">{% trans "DETERMINAÇÃO" %}</div>
     <div class="stat">
       <input class="editable" disabled id="detAtual" type="number" value="{{ ficha.estatisticas.pe_atual }}" data-save="estatisticas.pe_atual" style="width:60px;">
       /
@@ -96,15 +97,15 @@
 
   <div class="section defenses">
     <div>
-      <div class="label">DEFESA</div>
+      <div class="label">{% trans "DEFESA" %}</div>
       <input class="editable" disabled type="number" value="{{ ficha.estatisticas.defesa }}" data-save="estatisticas.defesa">
     </div>
     <div>
-      <div class="label">ESQUIVA</div>
+      <div class="label">{% trans "ESQUIVA" %}</div>
       <input class="editable" disabled type="number" value="{{ ficha.estatisticas.esquiva }}" data-save="estatisticas.esquiva">
     </div>
     <div>
-      <div class="label">BLOQUEIO</div>
+      <div class="label">{% trans "BLOQUEIO" %}</div>
       <input class="editable" disabled type="number" value="{{ ficha.estatisticas.bloqueio }}" data-save="estatisticas.bloqueio">
     </div>
   </div>
@@ -112,9 +113,9 @@
   <div class="section">
     <div>
       <table width="100%">
-        <td class="list" width="111.68">Ataque</td>
-        <td class="list" width="111.68">Dano</td>
-        <td class="listend" width="111.68">Crítico</td>
+        <td class="list" width="111.68">{% trans "Ataque" %}</td>
+        <td class="list" width="111.68">{% trans "Dano" %}</td>
+        <td class="listend" width="111.68">{% trans "Crítico" %}</td>
       </table>  
     </div>
 
@@ -139,19 +140,19 @@
       {% endfor %}
 
     </div>
-    <button class="edit-btn" onclick="adicionar('ataque')">Adicionar ataque</button>
+    <button class="edit-btn" onclick="adicionar('ataque')">{% trans "Adicionar ataque" %}</button>
   </div>
 
   <button class="btn btn-success export naoficha" onclick="exportFichaJSON()">
-    <i class="bi bi-download"></i> Exportar Ficha
+    <i class="bi bi-download"></i> {% trans "Exportar Ficha" %}
   </button>
 
   <input type="file" id="importJson" accept=".json" hidden class="import naoficha" onchange="importarFichaJSON(event)">
   <button class="btn btn-primary import naoficha" onclick="document.getElementById('importJson').click()">
-    <i class="bi bi-upload"></i> Importar Ficha
+    <i class="bi bi-upload"></i> {% trans "Importar Ficha" %}
   </button>
 
-  <a href="{% url 'fichas:home' %}" class="ama"><button class="btn" id="retornar">Retornar</button></a>
+  <a href="{% url 'fichas:home' %}" class="ama"><button class="btn" id="retornar">{% trans "Retornar" %}</button></a>
 
   <div class="dice-control">
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
     {% load static %}
+    {% load i18n %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.125">
     <script src="{% static 'js/scripts.js' %}?v=1.13" defer></script>
     <link rel="icon" type="image/x-icon" href="{% static 'img/d20hub.ico' %}">
@@ -40,7 +41,7 @@
 </head>
 <body>
     <div class="toolbar">
-        <h1>Menu Principal</h1>
+        <h1>{% trans "Menu Principal" %}</h1>
     </div>
     <h2 id="saudacao">
         <span id="texto-boas-vindas"></span><span id="nome-usuario" data-usuario="{{ usuario }}"></span><span id="final"></span><span class="cursor">|</span>
@@ -50,43 +51,46 @@
             <a href="{% url 'fichas:home' %}">
                 <span class="icone icone-create"></span>
             </a>
-            <p>Abrir Fichas</p>
+            <p>{% trans "Abrir Fichas" %}</p>
         </div>
         <div class="opcao">
             <a href="{% url 'sessoes:criar_sala' %}">
                 <span class="icone icone-extrude"></span>
             </a>
-            <p>Criar sala</p>
+            <p>{% trans "Criar sala" %}</p>
         </div>
         <div class="opcao">
             <a href="{% url 'sessoes:entrar_sala' %}">
                 <span class="icone icone-discuss"></span>
             </a>
-            <p>Entrar em Sala</p>
+            <p>{% trans "Entrar em Sala" %}</p>
         </div>
         <div class="opcao">
             <a href="{% url 'core:listar_usuarios' %}">
                 <span class="icone icone-license"></span>
             </a>
-            <p>Ver usuários cadastrados</p>
+            <p>{% trans "Ver usuários cadastrados" %}</p>
         </div>
         <div class="opcao">
             <a href="{% url 'contas:logout' %}">
                 <span class="icone icone-end"></span>
             </a>
-            <p>Sair</p>
+            <p>{% trans "Sair" %}</p>
         </div>
+    </div>
+    <div class="seletor-idioma-container">
+        {% include 'componentes/seletor_idioma.html' %}
     </div>
     <footer class="rodape">
         <div class="creditos-site">
-            <p>Desenvolvido por</p>
+            <p>{% trans "Desenvolvido por" %}</p>
             <p class="criadores">
                 Henrique Gama Pereira · Eduardo Schuquel Mattioni · Nicolas Silveira Teixeira
             </p>
         </div>
 
         <div class="creditos-icones">
-            <p>Ícones utilizados</p>
+            <p>{% trans "Ícones utilizados" %}</p>
             <p>
                 Ícones por Shannon E. Thomas, disponibilizados pelo
                 <a href="https://www.svgrepo.com/" target="_blank" rel="noopener noreferrer">

@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de Login</title>
     {% load static %}
+    {% load i18n %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.2">
     <script src="{% static 'js/scripts.js' %}" defer></script>
     <link rel="icon" type="image/x-icon" href="{% static 'img/d20hub.ico' %}">
 </head>
 <body class="login-cadastro">
     <div class="toolbar">
-        <h1>Tela de Login</h1>
+        <h1>{% trans "Tela de Login" %}</h1>
     </div>
     <div class="tudo">
         {% if erro %}
@@ -22,16 +23,16 @@
         {% endif %}
         <form action="/contas/login/" method="POST">
             {% csrf_token %}
-            <label for="login">Login:</label>
-            <input type="text" id="login" name="login" required placeholder="Digite seu login"> <br>
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required placeholder="Digite sua senha"><br>
+            <label for="login">{% trans "Login:" %}</label>
+            <input type="text" id="login" name="login" required placeholder="{% trans "Digite seu login" %}"> <br>
+            <label for="senha">{% trans "Senha:" %}</label>
+            <input type="password" id="senha" name="senha" required placeholder="{% trans "Digite sua senha" %}"><br>
             <div class="botoes">
-                <button id="enviar" type="submit">Enviar</button>
-                <button id="apagar" type="reset">Apagar</button>
+                <button id="enviar" type="submit">{% trans "Enviar" %}</button>
+                <button id="apagar" type="reset">{% trans "Apagar" %}</button>
             </div>
         </form>
-        <p>Não tem conta? <a href="/contas/signup/">Cadastre-se</a></p>
+        <p>{% trans "Não tem conta?" %} <a href="/contas/signup/">{% trans "Cadastre-se" %}</a></p>
     </div>
 </body>
 </html>

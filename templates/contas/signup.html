@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de Signup</title>
     {% load static %}
+    {% load i18n %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.2">
     <script src="{% static 'js/scripts.js' %}" defer></script>
     <link rel="icon" type="image/x-icon" href="{% static 'img/d20hub.ico' %}">
 </head>
 <body class="login-cadastro">
     <div class="toolbar">
-        <h1>Tela de Cadastro</h1>
+        <h1>{% trans "Tela de Cadastro" %}</h1>
     </div>
     <section class="tudo">
         {% if form.errors %}
@@ -21,27 +22,29 @@
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div class="field">
-                <label for="id_username">Nome de Usuário:</label>
+                <label for="id_username">{% trans "Nome de Usuário:" %}</label>
                 {{ form.username }}{{ form.username.errors }}
             </div>
             <div class="field">
-                <label for="id_email">Email:</label>
+                <label for="id_email">{% trans "Email:" %}
+                    
+                </label>
                 {{ form.email }}{{ form.email.errors }}
             </div>
             <div class="field">
-                <label for="id_password1">Senha:</label>
+                <label for="id_password1">{% trans "Senha:" %}</label>
                 {{ form.password1 }}{{ form.password1.errors }}
             </div>
             <div class="field">
-                <label for="id_password2">Confirme sua Senha:</label>
+                <label for="id_password2">{% trans "Confirme sua Senha:" %}</label>
                 {{ form.password2 }}{{ form.password2.errors }}
             </div>
             <div class="botoes">
-            <button id="enviar" type="submit">Enviar</button>
-            <button id="apagar" type="reset">Apagar</button>
+            <button id="enviar" type="submit">{% trans "Enviar" %}</button>
+            <button id="apagar" type="reset">{% trans "Apagar" %}</button>
         </div>
     </form>
-    <p>Já possui uma conta? <a href="{% url 'contas:login' %}">Entrar</a></p>
+    <p>{% trans "Já possui uma conta?" %} <a href="{% url 'contas:login' %}">{% trans "Entrar" %}</a></p>
     </section>
 </body>
 </html>

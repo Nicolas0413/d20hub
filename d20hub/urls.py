@@ -24,6 +24,7 @@ urlpatterns = [
     path('contas/', include('contas.urls')),
     path('fichas/', include('fichas.urls')),
     path('sessoes/', include('sessoes.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += static(

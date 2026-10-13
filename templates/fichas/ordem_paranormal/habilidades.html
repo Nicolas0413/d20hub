@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% load static %}
+  {% load i18n %}
   <link rel="icon" type="image/x-icon" href="{% static 'img/d20hub.ico' %}">
   <title>D20HUB</title>
 
@@ -56,11 +57,11 @@
         </div>
         <div class="level">
           <span title="Nex">Nex</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
-          Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
+          {% trans "Classe:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
         </div>
         <div class="level">
-          Trilha:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
-          Origem:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+          {% trans "Trilha:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
+          {% trans "Origem:" %}<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
         </div>
       </div>
     </div>
@@ -69,9 +70,9 @@
   <div class="section">
     <div>
       <div class="item-row"  style="width:85%; margin-left: 15px; text-align: center;">
-        <h2 title="Nome da habilidade">Habilidade</h2>
-          <h2 title="Custo para ativar a habilidade, geralmente pago em PE (Pontos de Esforço) ou PD (Pontos de Determinação)">Custo</h2>
-          <h2 title="Página do livro de regras em que é possivel encontrar uma descrição detalhada da habilidade">Página</h2>
+        <h2 title="{% trans "Nome da habilidade" %}">{% trans "Habilidade" %}</h2>
+          <h2 title="{% trans "Custo para ativar a habilidade, geralmente pago em PE (Pontos de Esforço) ou PD (Pontos de Determinação)" %}">{% trans "Custo" %}</h2>
+          <h2 title="{% trans "Página do livro de regras em que é possivel encontrar uma descrição detalhada da habilidade" %}">{% trans "Página" %}</h2>
       </div> 
       <div class="accordion accordion-custom" id="accordionExample">
         {% for habilidade in ficha.habilidades.all %}
@@ -88,9 +89,9 @@
             </h2>
             <div id="habilidade{{ habilidade.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionHabilidades">
               <div class="accordion-body">
-                <textarea id="descricao-{{ habilidade.id }}" class="editable habilidade" disabled placeholder="Descrição da habilidade" data-save="descricao" data-habilidade-id="{{ habilidade.id }}">{{ habilidade.descricao }}</textarea>
+                <textarea id="descricao-{{ habilidade.id }}" class="editable habilidade" disabled placeholder="{% trans "Descrição da habilidade" %}" data-save="descricao" data-habilidade-id="{{ habilidade.id }}">{{ habilidade.descricao }}</textarea>
                 <button class="remove-item" data-habilidade-id="{{ habilidade.id }}" onclick="remover('habilidade', '{{ habilidade.id }}')">
-                  Remover habilidade
+                  {% trans "Remover habilidade" %}
                 </button>
               </div>
             </div>
@@ -99,8 +100,8 @@
         {% endfor %}
       </div>
     </div>
-    <button class="edit-btn" id="addHabBtn" onclick="adicionar('habilidade')">Adicionar Habilidade</button>
-    
+    <button class="edit-btn" id="addHabBtn" onclick="adicionar('habilidade')">{% trans "Adicionar Habilidade" %}</button>
+
   </div>
 </div>
 
