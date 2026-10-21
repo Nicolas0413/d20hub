@@ -3,90 +3,89 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: D20Hub 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-16 19:13+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-10-21 00:00+0000\n"
+"Last-Translator: D20Hub Team\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: static/js/scripts.js:10
 msgid "Fichas: %(contador)s/15"
-msgstr ""
+msgstr "Fichas: %(contador)s/15"
 
 #: static/js/scripts.js:18
 msgid "Olá %(usuario)s, Seja bem-vindo ao D20HUB."
-msgstr "Hola %(usuario)s, ¡Bienvenido a D20HUB!"
+msgstr "Hola %(usuario)s, ¡bienvenido a D20HUB!"
 
 #: static/js/scripts.js:76
 msgid "Nome da ficha"
-msgstr ""
+msgstr "Nombre de la ficha"
 
 #: static/js/scripts.js:97 static/js/scripts.js:152 static/js/scripts.js:231
 #: static/js/scripts.js:258
 msgid "Erro"
-msgstr ""
+msgstr "Error"
 
 #: static/js/scripts.js:98
 msgid "Erro ao salvar o nome da ficha! Tente novamente."
-msgstr ""
+msgstr "¡Error al guardar el nombre de la ficha! Inténtalo de nuevo."
 
 #: static/js/scripts.js:109
 msgid "Acessar"
-msgstr ""
+msgstr "Acceder"
 
 #: static/js/scripts.js:119
 msgid "Nome inválido"
-msgstr ""
+msgstr "Nombre no válido"
 
 #: static/js/scripts.js:120
 msgid "Por favor, digite um nome para a ficha."
-msgstr ""
+msgstr "Por favor, introduce un nombre para la ficha."
 
 #: static/js/scripts.js:126
 msgid "Excluir"
-msgstr ""
+msgstr "Eliminar"
 
 #: static/js/scripts.js:133
 msgid "Excluir ficha"
-msgstr ""
+msgstr "Eliminar ficha"
 
 #: static/js/scripts.js:134
 msgid "Tem certeza que deseja excluir esta ficha?"
-msgstr ""
+msgstr "¿Estás seguro de que deseas eliminar esta ficha?"
 
 #: static/js/scripts.js:153
 msgid "Erro ao excluir ficha! Tente novamente."
-msgstr ""
+msgstr "¡Error al eliminar la ficha! Inténtalo de nuevo."
 
 #: static/js/scripts.js:187
 msgid "Limite atingido"
-msgstr ""
+msgstr "Límite alcanzado"
 
 #: static/js/scripts.js:188
 msgid "Você já possui o número máximo de 15 fichas."
-msgstr ""
+msgstr "Ya tienes el número máximo de 15 fichas."
 
 #: static/js/scripts.js:214
 msgid "Limpar fichas"
-msgstr ""
+msgstr "Eliminar todas las fichas"
 
 #: static/js/scripts.js:215
 msgid "Tem certeza que deseja excluir todas as suas fichas?"
-msgstr ""
+msgstr "¿Estás seguro de que deseas eliminar todas tus fichas?"
 
 #: static/js/scripts.js:232
 msgid "Não foi possível limpar as fichas. Tente novamente."
-msgstr ""
+msgstr "No se pudieron eliminar las fichas. Inténtalo de nuevo."
 
 #: static/js/scripts.js:259
 msgid "Não foi possível criar a ficha. Tente novamente."
-msgstr ""
+msgstr "No se pudo crear la ficha. Inténtalo de nuevo."
