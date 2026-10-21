@@ -120,8 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'pt-br'
 
 LANGUAGES = [
-    ('pt-br', _('Português')),
-    ('es', _('Español')),
+    ('pt-br', 'Português'),
+    ('es', 'Español'),
 ]
 
 LOCALE_PATHS = [BASE_DIR / 'locale']

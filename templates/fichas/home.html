@@ -7,8 +7,11 @@
     {% load i18n %}
     <link rel="icon" type="image/x-icon" href="{% static 'img/d20hub.ico' %}">
     <title>D20HUB</title>
+    
     <link rel="stylesheet" href="{% static 'css/fichas_home.css' %}?v=1.26">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="{% url 'javascript-catalog' %}"></script>
+    <script src="{% static 'js/scripts.js' %}?v=1.14" defer></script>
     <script src="{% static 'js/scripts.js' %}?v=1.25" defer></script>
     <script>
         window.csrftoken = '{{ csrf_token }}';
@@ -16,13 +19,13 @@
 </head>
 <body>
     <div class="toolbar">
-        <a href="{% url 'core:home' %}" id="retornar"><i class="bi bi-arrow-left"></i> Voltar ao Menu</a>
-        <h1 id="contadorFichas">Fichas: 0/15</h1>
+        <a href="{% url 'core:home' %}" id="retornar"><i class="bi bi-arrow-left"></i> {% trans "Voltar ao Menu" %}</a>
+        <h1 id="contadorFichas">{% trans "Fichas: 0/15" %}</h1>
     </div>
     
     <div class="botoes-fichas">
-        <button class="novaficha" id="criarFicha"><i class="bi bi-plus-lg"></i> Criar ficha</button>
-        <button class="novaficha" id="limparFichas"><i class="bi-eraser"></i> Limpar fichas</button>
+        <button class="novaficha" id="criarFicha"><i class="bi bi-plus-lg"></i> {% trans "Criar ficha" %}</button>
+        <button class="novaficha" id="limparFichas"><i class="bi-eraser"></i> {% trans "Limpar fichas" %}</button>
     </div>
 
     <div id="fichasContainer"></div>
@@ -30,7 +33,7 @@
     <div id="mensagemModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="mensagemModalTitulo">Mensagem</h2>
+                <h2 id="mensagemModalTitulo">{% trans "Mensagem" %}</h2>
                 <button id="mensagemModalFechar" class="close-modal">
                     &times;
                 </button>
@@ -38,8 +41,8 @@
             <div class="modal-body">
                 <p id="mensagemModalTexto"></p>
                 <div id="mensagemModalBotoes" class="modal-botoes">
-                    <button id="mensagemModalCancelar">Cancelar</button>
-                    <button id="mensagemModalConfirmar">Confirmar</button>
+                    <button id="mensagemModalCancelar">{% trans "Cancelar" %}</button>
+                    <button id="mensagemModalConfirmar">{% trans "Confirmar" %}</button>
                 </div>
             </div>
         </div>
@@ -47,13 +50,13 @@
     <div id="sistemaModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Escolha o sistema</h2>
+                <h2>{% trans "Escolha o sistema" %}</h2>
                 <button id="sistemaModalFechar" class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="sistema-lista">
-                    <button class="sistema-opcao" data-sistema="ordem_paranormal">Ordem Paranormal</button>
-                    <button class="sistema-opcao" data-sistema="tormenta20">Tormenta 20</button>
+                    <button class="sistema-opcao" data-sistema="ordem_paranormal">{% trans "Ordem Paranormal" %}</button>
+                    <button class="sistema-opcao" data-sistema="tormenta20">{% trans "Tormenta 20" %}</button>
                 </div>
             </div>
         </div>

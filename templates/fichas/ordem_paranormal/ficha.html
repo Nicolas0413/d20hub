@@ -33,11 +33,11 @@
   <div class="sheet" data-id="{{ ficha.id }}">
     <header>
       <div style="margin-bottom: 10px; text-align: center;">
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">Ficha</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">Pericias</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">Habilidades</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">Inventário</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">Detalhes</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">{% trans "Ficha" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">{% trans "Pericias" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">{% trans "Habilidades" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">{% trans "Inventário" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">{% trans "Detalhes" %}</a>
       </div>
       <div class="top">
         <div class="image-wrapper">

@@ -33,11 +33,11 @@
 <div class="sheet" data-id="{{ ficha.id }}">
   <header>
     <div style="margin-bottom: 10px; text-align: center;">
-      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">Ficha</a>
-      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">Pericias</a>
-      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">Habilidades</a>
-      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">Inventário</a>
-      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">Detalhes</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">{% trans "Ficha" %}</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">{% trans "Pericias" %}</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">{% trans "Habilidades" %}</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">{% trans "Inventário" %}</a>
+      <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">{% trans "Detalhes" %}</a>
     </div>
     <div class="top">
       <div class="image-wrapper">
@@ -56,12 +56,12 @@
           {% endif %} 
         </div>
         <div class="level">
-          <span title="Nex">Nex</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
-          Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
+          <span title="Nex">{% trans "Nex" %}</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">% &nbsp&nbsp&nbsp&nbsp
+          {% trans "Classe:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
         </div>
         <div class="level">
-          Trilha:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
-          Origem:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+          {% trans "Trilha:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha">
+          {% trans "Origem:" %}<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
         </div>
       </div>
     </div>
@@ -70,10 +70,10 @@
   <div class="section">
     <div>
       <table width="100%">
-        <th class="list" width="40%" title="Nome da perícia">Perícia</th>
-        <th class="list" width="20%" title="Atributo base da perícia, jogue uma quantidade de dados igual seu valor do atributo e pegue o maior">Dados</th>
-        <th class="list" width="20%" title="Bônus total que será somado ao dado que você tirou, Bônus = Treino + Bônus de itens">Bônus</th>
-        <th class="listend" width="20%" title="O valor base que seu personagem soma ao rolar testes de pericia, varia entre 5, 10 e 15">Treino</th>
+        <th class="list" width="40%" title="Nome da perícia">{% trans "Perícia" %}</th>
+        <th class="list" width="20%" title="Atributo base da perícia, jogue uma quantidade de dados igual seu valor do atributo e pegue o maior">{% trans "Dados" %}</th>
+        <th class="list" width="20%" title="Bônus total que será somado ao dado que você tirou, Bônus = Treino + Bônus de itens">{% trans "Bônus" %}</th>
+        <th class="listend" width="20%" title="O valor base que seu personagem soma ao rolar testes de pericia, varia entre 5, 10 e 15">{% trans "Treino" %}</th>
       </table>  
     </div>
 
@@ -86,11 +86,11 @@
               <td class="list" width="20%"><input  id="bonus.{{ pericia.id }}" class="editable pericia" disabled value="{{pericia.bonus}}" data-save="bonus" data-pericia-id="{{ pericia.id }}"></td>
               <td class="listend" width="20%"><input id="treinamento.{{ pericia.id }}" class="editable pericia" disabled value="{{pericia.treinamento}}" data-save="treinamento" data-pericia-id="{{ pericia.id }}"></td>
             </table>
-            <button data-pericia-id="{{ pericia.id }}" onclick="remover('pericia', '{{ pericia.id }}')">Remover</button>
+            <button data-pericia-id="{{ pericia.id }}" onclick="remover('pericia', '{{ pericia.id }}')">{% trans "Remover" %}</button>
           </div> 
         {% endfor %}
     </div>
-    <button class="edit-btn" onclick="adicionar('pericia')">Adicionar Perícia</button>
+    <button class="edit-btn" onclick="adicionar('pericia')">{% trans "Adicionar Perícia" %}</button>
   </div>
 </div>
 

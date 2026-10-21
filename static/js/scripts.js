@@ -5,18 +5,28 @@ const NOMES_SISTEMAS = {
     tormenta20: "Tormenta 20"
 };
 
+function atualizarContador() {
+    document.getElementById("contadorFichas").textContent =
+        interpolate(gettext("Fichas: %(contador)s/15"), { contador: contador }, true);
+}
+
 if (nome) {
     const boasVindas = document.getElementById("texto-boas-vindas");
     const final = document.getElementById("final");
     const usuario = nome.dataset.usuario;
-    const texto = `Olá ${usuario}, Seja bem-vindo ao D20HUB.`;
+
+    const modelo = gettext("Olá %(usuario)s, Seja bem-vindo ao D20HUB.");
+    const [antes, depois] = modelo.split("%(usuario)s");
+    const texto = antes + usuario + depois;
+    const fimNome = antes.length + usuario.length;
     let i = 0;
+
     function digitar() {
         if (i < texto.length) {
-            if (i < 4) {
+            if (i < antes.length) {
                 boasVindas.textContent += texto[i];
 
-            } else if (i < 4 + usuario.length) {
+            } else if (i < fimNome) {
                 nome.textContent += texto[i];
 
             } else {
@@ -50,14 +60,6 @@ if (nome) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const elemento = document.getElementById("texto-boas-vindas");
-
-    if (elemento) {
-        digitar();
-    }
-});
-
 function criarDivFicha(id, nome, sistema) {
     const div = document.createElement("div");
     div.classList.add("divfichas");
@@ -71,7 +73,7 @@ function criarDivFicha(id, nome, sistema) {
 
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Nome da ficha";
+    input.placeholder = gettext("Nome da ficha");
     input.classList.add("inputficha");
     input.value = nome;
     div.appendChild(input);
@@ -92,8 +94,8 @@ function criarDivFicha(id, nome, sistema) {
         .then(data => {
             if (data.status !== true) {
                 mostrarMensagem(
-                    "Erro",
-                    "Erro ao salvar o nome da ficha! Tente novamente."
+                    gettext("Erro"),
+                    gettext("Erro ao salvar o nome da ficha! Tente novamente.")
                 );
             }
         });
@@ -104,7 +106,7 @@ function criarDivFicha(id, nome, sistema) {
     div.appendChild(botoesDiv);
         
     const acessarBtn = document.createElement("button");
-    acessarBtn.innerHTML = '<i class="bi-file-earmark-text"></i> Acessar';
+    acessarBtn.innerHTML = '<i class="bi-file-earmark-text"></i> ' + gettext("Acessar");
     acessarBtn.classList.add("acessarBtn");
     botoesDiv.appendChild(acessarBtn);
 
@@ -113,23 +115,23 @@ function criarDivFicha(id, nome, sistema) {
         if (nomeAtual) {
             window.location.href = `/fichas/${id}/ficha/`;
         } else {
-                mostrarMensagem(
-                    "Nome inválido",
-                    "Por favor, digite um nome para a ficha."
-                );
-            }
+            mostrarMensagem(
+                gettext("Nome inválido"),
+                gettext("Por favor, digite um nome para a ficha.")
+            );
+        }
     });
         
     const excluirBtn = document.createElement("button");
-    excluirBtn.innerHTML = '<i class="bi bi-trash"></i> Excluir';
+    excluirBtn.innerHTML = '<i class="bi bi-trash"></i> ' + gettext("Excluir");
     excluirBtn.classList.add("excluirBtn");
     botoesDiv.appendChild(excluirBtn);
 
     excluirBtn.addEventListener("click", () => {
 
         confirmarAcao(
-            "Excluir ficha",
-            "Tem certeza que deseja excluir esta ficha?",
+            gettext("Excluir ficha"),
+            gettext("Tem certeza que deseja excluir esta ficha?"),
             () => {
 
                 fetch(`/fichas/${id}/ficha/excluir/`, {
@@ -144,12 +146,11 @@ function criarDivFicha(id, nome, sistema) {
                     if (data.status === true) {
                         fichasContainer.removeChild(div);
                         contador--;
-                        document.getElementById("contadorFichas").textContent =
-                            `Fichas: ${contador}/15`;
+                        atualizarContador();
                     } else {
                         mostrarMensagem(
-                            "Erro",
-                            "Erro ao excluir ficha! Tente novamente."
+                            gettext("Erro"),
+                            gettext("Erro ao excluir ficha! Tente novamente.")
                         );
                     }
                 });
@@ -172,7 +173,7 @@ function carregarFichas() {
             criarDivFicha(ficha.id, ficha.nome, ficha.sistema);
             contador++;
         });
-        document.getElementById("contadorFichas").textContent = `Fichas: ${contador}/15`;
+        atualizarContador();
     });
 }
 
@@ -183,8 +184,8 @@ if (document.getElementById("fichasContainer")) {
     document.getElementById("criarFicha").addEventListener("click", () => {
         if (contador >= 15) {
             mostrarMensagem(
-                "Limite atingido",
-                "Você já possui o número máximo de 15 fichas."
+                gettext("Limite atingido"),
+                gettext("Você já possui o número máximo de 15 fichas.")
             );
             return;
         }
@@ -210,8 +211,8 @@ if (document.getElementById("fichasContainer")) {
 
     document.getElementById("limparFichas").addEventListener("click", () => {
         confirmarAcao(
-            "Limpar fichas",
-            "Tem certeza que deseja excluir todas as suas fichas?",
+            gettext("Limpar fichas"),
+            gettext("Tem certeza que deseja excluir todas as suas fichas?"),
             () => {
                 fetch("/fichas/limpar/", {
                     method: "POST",
@@ -224,12 +225,11 @@ if (document.getElementById("fichasContainer")) {
                     if (data.status === true) {
                         while (fichasContainer.firstChild) {fichasContainer.removeChild(fichasContainer.firstChild);}
                         contador = 0;
-                        document.getElementById("contadorFichas").textContent = `Fichas: ${contador}/15`;
+                        atualizarContador();
                     } else {
-
                         mostrarMensagem(
-                            "Erro",
-                            "Não foi possível limpar as fichas. Tente novamente."
+                            gettext("Erro"),
+                            gettext("Não foi possível limpar as fichas. Tente novamente.")
                         );
                     }
                 });
@@ -252,9 +252,12 @@ function criarFicha(sistema) {
         if (data.status === true) {
             criarDivFicha(data.id, data.nome, data.sistema);
             contador++;
-            document.getElementById("contadorFichas").textContent = `Fichas: ${contador}/15`;
+            atualizarContador();
         } else {
-            mostrarMensagem("Erro", data.mensagem || "Não foi possível criar a ficha. Tente novamente.");
+            mostrarMensagem(
+                gettext("Erro"),
+                data.mensagem || gettext("Não foi possível criar a ficha. Tente novamente.")
+            );
         }
     });
 }
@@ -307,4 +310,3 @@ function confirmarAcao(titulo, mensagem, callback) {
         modal.style.display = "none";
     };
 }
-

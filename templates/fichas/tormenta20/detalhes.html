@@ -34,11 +34,11 @@
   <div class="sheet" data-id="{{ ficha.id }}">
     <header>
       <div style="margin-bottom: 10px; text-align: center;">
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">Ficha</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">Pericias</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">Habilidades</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">Inventário</a>
-        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">Detalhes</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'ficha' %}">{% trans "Ficha" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'pericias' %}">{% trans "Pericias" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'habilidades' %}">{% trans "Habilidades" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'inventario' %}">{% trans "Inventário" %}</a>
+        <a class="btn btn-outline-primary" href="{% url 'fichas:ler' ficha.id 'detalhes' %}">{% trans "Detalhes" %}</a>
       </div>
       <div class="top">
         <div class="image-wrapper">
@@ -57,24 +57,24 @@
             {% endif %} 
           </div>
           <div class="level">
-            Raça:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha"> &nbsp
-            Classe:<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
+            {% trans "Raça:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.trilha }}" data-save="trilha"> &nbsp
+            {% trans "Classe:" %}<input class="editable" disabled style="width:80px; font-size: 14px; text-align: left;" value="{{ ficha.classe }}" data-save="classe">    
           </div>
           <div class="level">
-            <span title="Nível">Nível</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">
+            <span title="Nível">{% trans "Nível" %}</span><input class="editable" disabled value="{{ ficha.nex }}" data-save="nex" style="width: 30px;">
             
-            Divindade:<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
+            {% trans "Divindade:" %}<input class="editable" disabled style="width:89px; font-size: 14px; text-align: left;" value="{{ ficha.origem }}" data-save="origem">
           </div>
         </div>
       </div>
     </header>
 
     <div>
-      <h2>Anotações:</h2> 
+      <h2>{% trans "Anotações:" %}</h2> 
       <textarea class="editable" disabled data-save="anotacoes">{{ ficha.anotacoes }}</textarea>
-      <h2>Aparência:</h2>
+      <h2>{% trans "Aparência:" %}</h2>
       <textarea class="editable" disabled data-save="aparencia">{{ ficha.aparencia }}</textarea>
-      <h2>História:</h2>
+      <h2>{% trans "História:" %}</h2>
       <textarea class="editable" disabled data-save="historia">{{ ficha.historia }}</textarea>
     </div>
 
